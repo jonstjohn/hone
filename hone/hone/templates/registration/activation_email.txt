@@ -1,0 +1,7 @@
+Hello, there!  Activate!
+
+{{ activation_key }}
+
+{{ expiration_days }}
+
+{{ site }}
