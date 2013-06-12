@@ -20,5 +20,6 @@ def question(request, quiz_id, num):
     if pos >= len(questions):
         error = True
 
+    question = questions[pos]
     context = {'question': question, 'answers': question.answer_set.all()}
     return render(request, 'quiz/question.html', context)
