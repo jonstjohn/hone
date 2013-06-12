@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from quiz.models import Question, Answer, Topic
+from quiz.models import Question, Answer, Topic, Quiz
 
 class AnswerInline(admin.StackedInline):
     model = Answer
@@ -15,4 +15,5 @@ class QuestionAdmin(admin.ModelAdmin):
 
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Topic)
+admin.site.register(Quiz)
 #admin.site.register(Answer)

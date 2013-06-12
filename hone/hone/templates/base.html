@@ -11,6 +11,9 @@
         body {
             padding-top: 60px;
         }
+
+        form.question label { min-height: 30px }
+        form.question button { margin-top: 20px }
     </style>
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -29,7 +32,7 @@
             <div style="float: right; padding: 10px 20px">2,871 Questions and 215 Topics (and counting)</div>
             <a class="brand" href="/">Hone.io</a>
             <ul class="nav">
-                <li><a href="{% url 'index' %}" class="">Home</a></li>
+                <li><a href="{% url 'home' %}" class="">Home</a></li>
                 <li>
                     <a href="/quiz">Take a Quiz</a>
                 </li>
