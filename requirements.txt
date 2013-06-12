@@ -3,5 +3,6 @@ PIL==1.1.7
 South==0.8.1
 argparse==1.2.1
 django-bootstrap-toolkit==2.12.1
+django-registration==0.9b1
 psycopg2==2.5
 wsgiref==0.1.2
