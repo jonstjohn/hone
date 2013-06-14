@@ -37,6 +37,12 @@ class Attempt(models.Model):
     def get_absolute_url(self):
         return '/quiz/attempt/{0}'.format(self.id)
 
+    def score(self):
+        questions = self.quiz.questions.all()
+        responses = Response.objects.filter(attempt = self)
+        correct = sum(r.answer.correct for r in responses)
+        return (float(correct) / len(questions)) * 100.0
+
 class Response(models.Model):
     attempt = models.ForeignKey(Attempt)
     answer = models.ForeignKey(Answer)

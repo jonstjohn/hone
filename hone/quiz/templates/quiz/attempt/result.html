@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Results for {{ attempt.quiz.quiz }}</h1>
+
+<div class="well">
+<h2>Score: {{ attempt.score|floatformat:2 }}%</h2>
+<ul class="unstyled">
+{% for response in responses %}
+
+   <li style="color: {% if response.answer.correct %}green{% else %}red{% endif %}">{{ response.answer }}</li> 
+
+
+{% endfor %}
+</ul>
+</div>
+
+{% endblock %}

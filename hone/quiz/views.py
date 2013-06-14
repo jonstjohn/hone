@@ -57,7 +57,7 @@ class AttemptQuestionPageView(View):
 
         responses = Response.objects.filter(attempt=attempt, answer__question=question)
         response = responses[0] if responses else None
-        context = {'question': question, 'answers': question.answer_set.all(), 'number': pos + 1, 'response': response}
+        context = {'question': question, 'answers': question.answer_set.all(), 'number': pos + 1, 'response': response, 'attempt': attempt}
         return render(request, 'quiz/attempt/question.html', context)
 
     def post(self, request, *args, **kwargs):
@@ -79,5 +79,20 @@ class AttemptQuestionPageView(View):
 
         pos = int(kwargs['num'])
 
-        return redirect('/quiz/attempt/{0}/{1}'.format(attempt.id, pos + 1))
+        if pos == len(questions) - 1:
+            return redirect('/quiz/attempt/{0}/result'.format(attempt.id, pos + 1))
+        else:
+            return redirect('/quiz/attempt/{0}/{1}'.format(attempt.id, pos + 1))
+
+class AttemptResultPageView(TemplateView):
+
+    template_name = 'quiz/attempt/result.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AttemptResultPageView, self).get_context_data(**kwargs)
+        attempt = Attempt.objects.get(pk=kwargs['attempt_id'])
+        responses = Response.objects.filter(attempt=attempt)
+        context['responses'] = responses
+        context['attempt'] = attempt
+        return context
 
