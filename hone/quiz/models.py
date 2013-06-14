@@ -34,6 +34,9 @@ class Attempt(models.Model):
     quiz = models.ForeignKey(Quiz)
     user = models.ForeignKey(User)
 
+    def get_absolute_url(self):
+        return '/quiz/attempt/{0}'.format(self.id)
+
 class Response(models.Model):
     attempt = models.ForeignKey(Attempt)
     answer = models.ForeignKey(Answer)

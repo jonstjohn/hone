@@ -1,5 +1,10 @@
-<ul>
-    {% for question in questions %}
-        <li>{{ question.question }}</li>
+{% extends 'base.html' %}
+
+{% block content %}
+<ul class="unstyled">
+    {% for quiz in quizzes %}
+        <li><a href="/quiz/{{ quiz.id }}/0">{{ quiz.quiz }}</a>
+            <a href="/quiz/attempt/create/{{ quiz.id }}" class="btn"/>Take it!</a></li>
     {% endfor %}
 </ul>
+{% endblock %}

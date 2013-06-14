@@ -2,13 +2,13 @@
 
 {% block content %}
 
-<h2>Question #1</h2>
+<h2>Question #{{ number }}</h2>
 <div class="well">
     <form class="question" action="" method="post"> 
         <fieldset>
             <legend>{{ question.question }}</legend>
             {% for answer in answers %}
-                <label class="radio"><input type="radio" name="answer" value="{{ answer.id }}"/> {{ answer.answer }}</label>
+                <label class="radio"><input type="radio" name="answer" value="{{ answer.id }}"{% if response and response.answer.id == answer.id %} checked{% endif %}/> {{ answer.answer }}</label>
             {% endfor %}
             {% csrf_token %}
             <button type="submit" class="btn btn-primary">Submit</button>

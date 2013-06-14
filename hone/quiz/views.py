@@ -1,14 +1,17 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views.generic.base import TemplateView, View
 
-from quiz.models import Question, Quiz
+from quiz.models import Question, Quiz, Attempt, Response, Answer
 
-def index(request):
-    questions = Question.objects.all()
-    #output = ', '.join([q.question for q in questions])
-    context = {'questions': questions}
-    return render(request, 'quiz/index.html', context)
-    #return HttpResponse(output)
+class HomePageView(TemplateView):
+
+    template_name = 'quiz/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HomePageView, self).get_context_data(**kwargs)
+        context['quizzes'] = Quiz.objects.all()
+        return context
 
 def question(request, quiz_id, num):
     quiz = Quiz.objects.get(pk=quiz_id)
@@ -23,3 +26,58 @@ def question(request, quiz_id, num):
     question = questions[pos]
     context = {'question': question, 'answers': question.answer_set.all()}
     return render(request, 'quiz/question.html', context)
+
+def attempt_create(request, quiz_id):
+
+    quiz = Quiz.objects.get(pk=quiz_id)
+    attempt = Attempt(user = request.user, quiz = quiz)
+    attempt.save()
+
+    return redirect(attempt)
+
+def attempt(request, attempt_id):
+    attempt = Attempt.objects.get(pk=attempt_id)
+    return render(request, 'quiz/attempt/index.html', {'attempt': attempt})
+
+class AttemptQuestionPageView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        attempt = Attempt.objects.get(pk=kwargs['attempt_id'])
+        quiz = attempt.quiz
+        questions = quiz.questions.all()
+
+        pos = int(kwargs['num'])
+
+        # TODO incorrect position
+        if pos >= len(questions):
+            error = True
+
+        question = questions[pos]
+
+        responses = Response.objects.filter(attempt=attempt, answer__question=question)
+        response = responses[0] if responses else None
+        context = {'question': question, 'answers': question.answer_set.all(), 'number': pos + 1, 'response': response}
+        return render(request, 'quiz/attempt/question.html', context)
+
+    def post(self, request, *args, **kwargs):
+
+        attempt = Attempt.objects.get(pk=kwargs['attempt_id'])
+        answer = Answer.objects.get(pk=request.POST['answer']) 
+        pos = int(kwargs['num'])
+        questions = attempt.quiz.questions.all()
+        question = questions[pos]
+
+        responses = Response.objects.filter(attempt=attempt, answer__question=question)
+
+        if responses:
+            response = responses[0]
+            response.answer = answer
+        else:
+            response = Response(attempt = attempt, answer = answer)
+        response.save()
+
+        pos = int(kwargs['num'])
+
+        return redirect('/quiz/attempt/{0}/{1}'.format(attempt.id, pos + 1))
+
