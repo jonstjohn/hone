@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="well">
+    <h1>{{ quiz.quiz }}</h1>
+
+    <h2>{{ quiz.questions.all|length }} questions</h2>
+    <h2>{{ quiz.attempts|length }} attempts</h2>
+    <div>
+        <a href="/quiz/attempt/create/{{ quiz.id }}" class="btn"/>Take it!</a>
+    </div>
+</div>
+
+{% endblock %}

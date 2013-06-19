@@ -6,6 +6,7 @@
 
 <div class="well">
 <h2>Score: {{ attempt.score|floatformat:2 }}%</h2>
+<div>{{ attempt.correct }} of {{ questionCount }} correct</div>
 <ul class="unstyled">
 {% for response in responses %}
 

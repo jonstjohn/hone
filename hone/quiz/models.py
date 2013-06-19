@@ -27,6 +27,9 @@ class Quiz(models.Model):
     quiz = models.CharField(max_length=100)
     questions = models.ManyToManyField(Question)
 
+    def attempts(self):
+        return Attempt.objects.filter(quiz=self)
+
     def __unicode__(self):
         return self.quiz
 
@@ -39,9 +42,11 @@ class Attempt(models.Model):
 
     def score(self):
         questions = self.quiz.questions.all()
+        return (float(self.correct()) / len(questions)) * 100.0
+
+    def correct(self):
         responses = Response.objects.filter(attempt = self)
-        correct = sum(r.answer.correct for r in responses)
-        return (float(correct) / len(questions)) * 100.0
+        return sum(r.answer.correct for r in responses)
 
 class Response(models.Model):
     attempt = models.ForeignKey(Attempt)

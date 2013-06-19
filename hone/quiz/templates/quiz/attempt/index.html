@@ -4,4 +4,6 @@
 
 <h1>Attempt for {{ attempt.quiz.quiz }}</h1>
 
+<a href="{% url 'attempt_question' attempt_id=attempt.id num=0 %}" class="btn">Go to first question</a>
+
 {% endblock %}

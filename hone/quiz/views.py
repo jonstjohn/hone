@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.views.generic.base import TemplateView, View
+from django.views.generic.base import TemplateView, View, RedirectView
 
 from quiz.models import Question, Quiz, Attempt, Response, Answer
 
@@ -11,6 +11,15 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomePageView, self).get_context_data(**kwargs)
         context['quizzes'] = Quiz.objects.all()
+        return context
+
+class DetailPageView(TemplateView):
+    
+    template_name = 'quiz/detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailPageView, self).get_context_data(**kwargs)
+        context['quiz'] = Quiz.objects.get(pk=kwargs['quiz_id'])
         return context
 
 def question(request, quiz_id, num):
@@ -27,13 +36,15 @@ def question(request, quiz_id, num):
     context = {'question': question, 'answers': question.answer_set.all()}
     return render(request, 'quiz/question.html', context)
 
-def attempt_create(request, quiz_id):
+class AttemptCreateRedirectView(RedirectView):
 
-    quiz = Quiz.objects.get(pk=quiz_id)
-    attempt = Attempt(user = request.user, quiz = quiz)
-    attempt.save()
+    def get_redirect_url(self, *args, **kwargs):
 
-    return redirect(attempt)
+        quiz = Quiz.objects.get(pk=kwargs['quiz_id'])
+        attempt = Attempt(user = self.request.user, quiz = quiz)
+        attempt.save()
+
+        return attempt.get_absolute_url()
 
 def attempt(request, attempt_id):
     attempt = Attempt.objects.get(pk=attempt_id)
@@ -94,5 +105,7 @@ class AttemptResultPageView(TemplateView):
         responses = Response.objects.filter(attempt=attempt)
         context['responses'] = responses
         context['attempt'] = attempt
+        context['questionCount'] = attempt.quiz.questions.count()
+
         return context
 

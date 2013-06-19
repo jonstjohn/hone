@@ -1,10 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<ul class="unstyled">
-    {% for quiz in quizzes %}
-        <li><a href="/quiz/{{ quiz.id }}/0">{{ quiz.quiz }}</a>
-            <a href="/quiz/attempt/create/{{ quiz.id }}" class="btn"/>Take it!</a></li>
-    {% endfor %}
+<h1>Take a Quiz</h1>
+
+<ul class="nav nav-tabs navmid">
+    <li class="active">
+        <a href="#">Most Popular</a>
+    </li>
+    <li><a href="#">By Topic</a></li>
+    <li><a href="#">Recently Added</a></li>
 </ul>
+
+<div style="border-left: 1px solid #ddd; padding: 20px">
+    <table class="table">
+    <thead>
+    <tr>
+        <th>Quiz</th>
+        <th>Topic</th>
+        <th># Questions</th>
+        <th>Previous Attempts</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for quiz in quizzes %}
+            <tr>
+                <td><a href="/quiz/{{ quiz.id }}">{{ quiz.quiz }}</a></td>
+                <td>PHP</td>
+                <td>{{ quiz.questions|length }}</td>
+                <td>5</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
 {% endblock %}
