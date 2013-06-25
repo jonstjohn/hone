@@ -1,8 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic.base import TemplateView, View, RedirectView
+from django.views.generic import CreateView, UpdateView
 
 from quiz.models import Question, Quiz, Attempt, Response, Answer
+from quiz.forms import QuestionForm, AnswerFormSet
 
 class HomePageView(TemplateView):
 
@@ -109,3 +111,25 @@ class AttemptResultPageView(TemplateView):
 
         return context
 
+class DashboardPageView(TemplateView):
+
+    template_name = 'quiz/dashboard.html'
+
+class ContributeHomePageView(TemplateView):
+
+    template_name = 'quiz/contribute/index.html'
+
+class QuestionCreatePageView(CreateView):
+
+    model = Question 
+    template_name = 'quiz/question/create.html'
+    form_class = QuestionForm
+
+    def get_context_data(self, **kwargs):
+        context = super(QuestionCreatePageView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['answer_formset'] = AnswerFormSet(self.request.POST)
+        else:
+            context['answer_formset'] = AnswerFormSet()
+            context['test'] = 'test'
+        return context

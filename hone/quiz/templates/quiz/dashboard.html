@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Dashboard</h1>
+
+<ul class="nav nav-tabs navmid">
+    <li class="active">
+        <a href="#">My Stats</a>
+    </li>
+    <li><a href="#">Accomplishments</a></li>
+    <li><a href="#">Other Users</a></li>
+    <li><a href="#">Profile</a></li>
+</ul>
+
+<div class="tab-container">
+
+    <div class="row-fluid">
+        <div class="span8">
+            <div class="well">
+                Overview
+            </div>
+        </div>
+        <div class="span4">
+            <div class="well">
+                Recent activity
+            </div>
+            <div class="well">
+                Topic mastery
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

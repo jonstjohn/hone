@@ -18,7 +18,10 @@
         .navtop > li { border-left: 1px solid #ccc; border-right: 1px solid #ccc; margin-right: -1px }
         .navmid { margin-bottom: 0 }
 
+        .tab-container { padding: 20px; border-left: 1px solid #ddd; border-right: 1px solid #ddd; border-bottom: 1px solid #ddd }
+
         h1 { font-size: 30px }
+        h2 { font-size: 24px }
     </style>
     <!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -35,7 +38,7 @@
         <div class="container">
             <div style="float: right">
                 {% if user.is_authenticated %}
-                    <a href="/accounts/profile" class="btn btn-success">Dashboard</a>
+                    <a href="/quiz/dashboard" class="btn btn-success">Dashboard</a>
                 {% else %}
                     <a href="/accounts/login" class="btn btn-success">Get Started</a>
                 {% endif %}
@@ -47,7 +50,7 @@
                     <a href="/quiz">Take a Quiz</a>
                 </li>
                 <li>
-                    <a href="/contribute">Contribute Questions</a>
+                    <a href="/quiz/contribute">Contribute Questions</a>
                 </li>
             </ul>
         </div>
