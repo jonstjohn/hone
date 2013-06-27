@@ -127,9 +127,10 @@ class QuestionCreatePageView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(QuestionCreatePageView, self).get_context_data(**kwargs)
+        context['question_form'] = QuestionForm()
         if self.request.POST:
             context['answer_formset'] = AnswerFormSet(self.request.POST)
         else:
-            context['answer_formset'] = AnswerFormSet()
+            context['answer_formset'] = AnswerFormSet(initial=[{'correct': True}])
             context['test'] = 'test'
         return context

@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     'quiz',
     'bootstrap_toolkit',
     'registration',
+    'crispy_forms',
 )
 
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window

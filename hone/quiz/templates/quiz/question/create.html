@@ -1,35 +1,23 @@
 {% extends "base.html" %}
 
-{% load bootstrap_toolkit %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
     <h1>Create Question</h1>
 
-    <form action="" method="post" class="form-horizontal">
+    <div>
+    <form class="form-horizontal" method="post">
+        <div class="alert">Create a question below. Try to be clear and concise.</div>
 
-        <div class="control-group required{% if form.topic.errors %} error{% endif %}">
-            <label class="control-label" for="id_topic">Topic</label>
-            <div class="controls">
-                {{ form.topic }}
-                {% if form.topic.errors %}<p class="help-block">{% for error in form.topic.errors %}{{ error }}{% endfor %}</p>{% endif %}
-            </div>
-        </div>
+        {% crispy question_form question_form.helper %}
 
-        <div class="control-group required{% if form.question.errors %} error{% endif %}">
-            <label class="control-label" for="id_question">Question</label>
-            <div class="controls">
-                {{ form.question }}
-                {% if form.question.errors %}<p class="help-block">{% for error in form.question.errors %}{{ error }}{% endfor %}</p>{% endif %}
-            </div>
-        </div>
-
-        {{ formset.management_form }}
-        {% for form in answer_formset %}
-            {{ form|as_bootstrap }}
-        {% endfor %}
-        {% csrf_token %}
-        <input type="submit" value="Next: Add Answers" class="btn"/>
+        <div class="alert">Enter at least two and up to 4 answers. Make sure to mark one correct.</div>
+        {% crispy answer_formset answer_formset.form.helper %}
     </form>
+
+        <input type="text" ng-model="name"/>
+        <h2>Hello {% templatetag openvariable %}name{% templatetag closevariable %}!</h2>
+    </div>
 
 {% endblock %}
