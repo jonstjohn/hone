@@ -1,10 +1,22 @@
-{% extends "base.html" %}
+{% extends 'quiz/contribute/base.html' %}
 
-{% block content %}
+{% block tab_content %}
 
-    <h1>Contribute</h1>
+    <div class="row-fluid">
+        <div class="span8">
+            <div class="well">
+                Overview
+            </div>
+        </div>
+        <div class="span4">
+            <div class="well">
+                Recent activity
+            </div>
+            <div class="well">
+                Topic mastery
+            </div>
+        </div>
+    </div>
 
-    <a href="/quiz/question/create" class="btn">Create New Question</a><br/>
-    <a href="/quiz/contribute/quiz/create" class="btn">Create New Quiz</a>
 
 {% endblock %}

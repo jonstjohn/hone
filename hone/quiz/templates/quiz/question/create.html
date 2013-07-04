@@ -1,23 +1,20 @@
-{% extends "base.html" %}
+{% extends "quiz/contribute/base.html" %}
 
 {% load crispy_forms_tags %}
 
-{% block content %}
+{% block tab_content %}
 
-    <h1>Create Question</h1>
-
-    <div>
     <form class="form-horizontal" method="post">
         <div class="alert">Create a question below. Try to be clear and concise.</div>
 
         {% crispy question_form question_form.helper %}
 
-        <div class="alert">Enter at least two and up to 4 answers. Make sure to mark one correct.</div>
-        {% crispy answer_formset answer_formset.form.helper %}
-    </form>
+        <div style="margin: 10px; border: 1px solid #ccc; padding: 10px" id="questionPreview"><em style="color: #ccc">Question preview appears here</em></div>
 
-        <input type="text" ng-model="name"/>
-        <h2>Hello {% templatetag openvariable %}name{% templatetag closevariable %}!</h2>
-    </div>
+        <div class="alert">Enter at least two and up to 4 answers. Make sure to mark one correct.</div>
+
+        {% crispy answer_formset answer_formset.form.helper %}
+
+    </form>
 
 {% endblock %}

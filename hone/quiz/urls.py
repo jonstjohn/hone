@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 
 from quiz import views
 from quiz.views import HomePageView, AttemptQuestionPageView, AttemptResultPageView, DetailPageView, AttemptCreateRedirectView
-from quiz.views import DashboardPageView, ContributeHomePageView, QuestionCreatePageView
+from quiz.views import DashboardPageView, ContributeHomePageView, QuestionCreatePageView, QuestionListPageView
 
 urlpatterns = patterns('',
     url(r'^$', HomePageView.as_view(), name='home'),
@@ -15,4 +15,5 @@ urlpatterns = patterns('',
     url(r'^dashboard$', DashboardPageView.as_view(), name='dashboard'),
     url(r'^contribute$', ContributeHomePageView.as_view(), name='contribute'),
     url(r'^question/create$', QuestionCreatePageView.as_view(), name='question_create'),
+    url(r'^question$', QuestionListPageView.as_view(), name='question_list'),
 )

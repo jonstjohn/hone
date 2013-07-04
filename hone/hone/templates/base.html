@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% load bootstrap_toolkit %}
-<html lang="en" ng-app>
+{% load staticfiles %}
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>Hone.io - Hone your development skills</title>
@@ -28,6 +29,7 @@
     <![endif]-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="{% static "js/question.js" %}"></script>
     {% bootstrap_javascript_tag %}
     {% block extra_head %}{% endblock %}
 </head>

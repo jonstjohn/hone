@@ -1,0 +1,9 @@
+{% extends 'quiz/contribute/base.html' %}
+
+{% block tab_content %}
+<ul>
+    {% for question in object_list %}
+        <li>{{ question.question }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

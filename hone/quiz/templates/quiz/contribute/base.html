@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Contribute</h1>
+
+<ul class="nav nav-tabs navmid">
+    <li class="active">
+        <a href="/quiz/question/create">New Question</a>
+    </li>
+    <li><a href="/quiz/contribute/quiz/create">New Quiz</a></li>
+    <li><a href="/quiz/question/">My Questions</a></li>
+    <li><a href="#">My Quizzes</a></li>
+</ul>
+
+<div class="tab-container">
+
+    {% block tab_content %}
+
+    {% endblock %}
+
+</div>
+
+
+    <h1>Contribute</h1>
+
+    <a href="/quiz/question/create" class="btn">Create New Question</a><br/>
+    <a href="/quiz/contribute/quiz/create" class="btn">Create New Quiz</a>
+
+{% endblock %}

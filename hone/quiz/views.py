@@ -1,6 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.generic.base import TemplateView, View, RedirectView
+from django.views.generic.list import ListView
 from django.views.generic import CreateView, UpdateView
 
 from quiz.models import Question, Quiz, Attempt, Response, Answer
@@ -133,4 +134,25 @@ class QuestionCreatePageView(CreateView):
         else:
             context['answer_formset'] = AnswerFormSet(initial=[{'correct': True}])
             context['test'] = 'test'
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        answer_formset = context['answer_formset']
+
+        if answer_formset.is_valid():
+            self.object = form.save()
+            answer_formset.instance = self.object
+            answer_formset.save()
+            return HttpResponseRedirect('created')
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
+class QuestionListPageView(ListView):
+
+    model = Question
+    template_name = 'quiz/question/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(QuestionListPageView, self).get_context_data(**kwargs)
         return context
